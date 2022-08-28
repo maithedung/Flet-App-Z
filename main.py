@@ -2,6 +2,7 @@ import flet
 from flet import AppBar, ElevatedButton, Page, Text, View, colors
 
 from calculator_app.calc import CalculatorAppControl
+from mecard_app.me_card import MeCardAppControl
 from todo_app.todo import TodoAppControl
 
 
@@ -12,8 +13,13 @@ def main(page: Page):
     todo_url = '/todo_app'
     calculator_title = 'Calculator App'
     calculator_url = '/calculator_app'
+    mecard_title = 'MeCard App'
+    mecard_url = '/mecard_app'
 
     page.title = home_title
+    page.fonts = {
+        "Kanit": "https://raw.githubusercontent.com/google/fonts/master/ofl/kanit/Kanit-Bold.ttf",
+    }
 
     # Home Page
     text1 = Text(
@@ -27,6 +33,10 @@ def main(page: Page):
         text=calculator_title,
         on_click=lambda _: page.go(calculator_url)
     )
+    elevated_button_mecard = ElevatedButton(
+        text=mecard_title,
+        on_click=lambda _: page.go(mecard_url)
+    )
     app_bar1 = AppBar(
         title=text1,
         bgcolor=colors.SURFACE_VARIANT
@@ -36,8 +46,10 @@ def main(page: Page):
         controls=[
             app_bar1,
             elevated_button_todo,
-            elevated_button_calc
-        ]
+            elevated_button_calc,
+            elevated_button_mecard
+        ],
+        scroll='adaptive'
     )
 
     # Todo App Page
@@ -59,7 +71,8 @@ def main(page: Page):
             app_bar2,
             todo
         ],
-        horizontal_alignment='center'
+        horizontal_alignment='center',
+        scroll='adaptive'
     )
 
     # Calculator App Page
@@ -78,7 +91,27 @@ def main(page: Page):
             calc
         ],
         horizontal_alignment='center',
-        vertical_alignment='center'
+        vertical_alignment='center',
+        scroll='adaptive'
+    )
+
+    # MeCard App Page
+    text4 = Text(
+        value=mecard_title
+    )
+    app_bar4 = AppBar(
+        title=text4,
+        bgcolor=colors.SURFACE_VARIANT
+    )
+    me_card = MeCardAppControl()
+    view4 = View(
+        route=home_url,
+        controls=[
+            app_bar4,
+            me_card
+        ],
+        horizontal_alignment='center',
+        scroll='adaptive'
     )
 
     def route_change(router):
@@ -94,6 +127,11 @@ def main(page: Page):
             page.views.append(
                 view3
             )
+        if page.route == mecard_url:
+            page.views.append(
+                view4
+            )
+
 
         page.update()
 
@@ -107,4 +145,9 @@ def main(page: Page):
     page.go(page.route)
 
 
-flet.app(target=main, route_url_strategy="path", view=flet.WEB_BROWSER)
+flet.app(
+    target=main,
+    route_url_strategy="path",
+    assets_dir="assets",
+    # view=flet.WEB_BROWSER
+)
