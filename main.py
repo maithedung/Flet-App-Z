@@ -91,8 +91,7 @@ def main(page: Page):
             calc
         ],
         horizontal_alignment='center',
-        vertical_alignment='center',
-        scroll='adaptive'
+        vertical_alignment='center'
     )
 
     # MeCard App Page
@@ -149,5 +148,5 @@ flet.app(
     target=main,
     route_url_strategy="path",
     assets_dir="assets",
-    # view=flet.WEB_BROWSER
+    view=flet.WEB_BROWSER
 )
